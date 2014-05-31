@@ -32,3 +32,5 @@ app.post('/audio', function(req, res, next) {
 
 app.listen(3000);
 
+console.log('Listening at http://localhost:3000 ...');
+
