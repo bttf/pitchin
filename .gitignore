@@ -30,3 +30,6 @@ build/Release
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
 node_modules
 >>>>>>> d47c270df26d36771f3e1830a5101cc68d95b904
+
+*.wav
+
