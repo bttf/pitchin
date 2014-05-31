@@ -12,78 +12,25 @@
       <button id="play">Play</button>
     </div>
     <div id="flash"></div>
+
+    <script>
+      Wami.setup({
+        id: 'flash'
+      });
+      
+      function pollAudio() {
+        stopRecording();
+        startRecording();
+        setTimeout(pollAudio, 2000);
+      }
+
+      function startRecording() {
+        Wami.startRecording('http://localhost:3000/audio');
+      }
+
+      function stopRecording() {
+        Wami.stopRecording();
+      }
+    </script>
   </body>
-
-  <script>
-    // initialize Wami
-    Wami.setup({
-      id: 'flash' // where to put the flash object
-    });
-
-    // initialize some global vars
-    var recordingUrl = '';
-    var playBackUrl = '';
-
-    // get button elements
-    var record = $('#record');
-    var play = $('#play');
-
-    // define functions
-    function startRecording() {
-      recordingUrl = 'http://localhost:3000/audio';
-      Wami.startRecording(recordingUrl);
-      // update button attributes
-      record
-        .html('Stop')
-        .unbind()
-        .click(function() {
-          stopRecording();
-        });
-    }
-
-    function stopRecording() {
-      Wami.stopRecording();
-      // get the recording for playback
-      playBackUrl = 'http://localhost/temp/wami/test/';
-      // update button attributes
-      record
-        .html('Record')
-        .unbind()
-        .click(function() {
-          startRecording();
-        });
-    }
-
-    function startPlaying() {
-      Wami.startPlaying(playBackUrl);
-      // update button attributes
-      play
-        .html('Stop')
-        .unbind()
-        .click(function() {
-          stopPlaying();
-        });
-    }
-
-    function stopPlaying() {
-      Wami.stopPlaying();
-      // update button attributes
-      play
-        .html('Play')
-        .unbind()
-        .click(function() {
-          startPlaying();
-        });
-    }
-
-    // add initial click functions
-    record.click(function() {
-      startRecording();
-    });
-
-    play.click(function() {
-      startPlaying();
-    });
-  </script>
-
 </html>

@@ -15,7 +15,6 @@ app.get('/', function(req, res) {
 });
 
 app.get('/elmo', function(req, res) {
-  // don't ask questions
   res.render('elmo');
 });
 
@@ -32,5 +31,5 @@ app.post('/audio', function(req, res, next) {
 
 app.listen(3000);
 
-console.log('Listening at http://localhost:3000 ...');
+console.log('Listening on port 3000 ...');
 
