@@ -16,9 +16,12 @@
   "author": "bttf",
   "license": "ISC",
   "dependencies": {
+    "collect-stream": "0.0.0",
     "consolidate": "^0.10.0",
+    "detect-pitch": "^0.1.2",
     "express": "^4.3.2",
     "handlebars": "^2.0.0-alpha.4",
-    "path": "^0.4.9"
+    "path": "^0.4.9",
+    "wav": "^0.1.2"
   }
 }

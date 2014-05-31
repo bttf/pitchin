@@ -3,7 +3,12 @@ var express = require('express');
 var app = express();
 var engines = require('consolidate');
 var path = require('path');
-var wav = 'temp.wav';
+var wav = require('wav');
+var collect = require('collect-stream');
+var detectPitch = require('detect-pitch');
+
+var filename = 'temp.wav';
+var signal = [];
 
 app.engine('html', engines.handlebars);
 app.set('view engine', 'html');
@@ -22,11 +27,31 @@ app.post('/audio', function(req, res, next) {
   if (req.get('Content-Type') !== 'audio/x-wav') {
     return;
   }
+  var reader = new wav.Reader();
+  console.log('receiving audio request ...');
 
-  console.log('opening stream for ' + path);
-  var stream = fs.createWriteStream(wav);
-  req.pipe(stream);
-  req.on('end', next);
+  //console.log('opening stream for ' + path);
+  //var stream = fs.createWriteStream(filename);
+ 
+  reader.on('format', function(format) {
+    console.log('calling collect ..');
+    collect(reader, function(err, data) {
+      var period;
+      console.log('piping request ...');
+      signal = data;
+      period = detectPitch(signal);
+      console.log('signal length is ' + signal.length);
+      console.log('period is ' + period);
+      console.log(22050 / period);
+      console.log('should be exiting collect now ...');
+    });
+    console.log('collect exited ...');
+  });
+
+  console.log('piping request ...');
+  req.pipe(reader);
+  console.log('calling next() ...');
+  next();
 });
 
 app.listen(3000);
