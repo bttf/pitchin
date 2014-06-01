@@ -10,6 +10,7 @@ var pk = require('./lib/pitch-kit');
 
 var filename = 'temp.wav';
 var signal = [];
+var pitch = '';
 
 app.engine('html', engines.handlebars);
 app.set('view engine', 'html');
@@ -22,6 +23,10 @@ app.get('/', function(req, res) {
 
 app.get('/elmo', function(req, res) {
   res.render('elmo');
+});
+
+app.get('/getPitch', function(req, res) {
+  res.send(200, pitch);
 });
 
 app.post('/audio', function(req, res, next) {
@@ -41,6 +46,7 @@ app.post('/audio', function(req, res, next) {
       console.log('piping request ...');
       signal = data;
       period = detectPitch(signal);
+      pitch = pk.getPitch(22050 / period);
       console.log('signal length is ' + signal.length);
       console.log('period is ' + period);
       console.log(22050 / period);
@@ -53,7 +59,8 @@ app.post('/audio', function(req, res, next) {
   console.log('piping request ...');
   req.pipe(reader);
   console.log('calling next() ...');
-  next();
+  res.send(200, 'shit shit shit shit shit');
+  //next();
 });
 
 app.listen(3000);

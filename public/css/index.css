@@ -1,0 +1,13 @@
+body {
+  background-color: #000;
+}
+
+#pitch {
+  font-family: 'Advent Pro', sans-serif;
+  font-size: 4em;
+  color: #fff;
+}
+
+.top-buffer {
+  margin-top: 4em;
+}

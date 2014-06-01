@@ -124,7 +124,7 @@ Wami.setup = function(options) {
 		// Create a DIV for the SWF under _options.id
 
 		var container = document.createElement('div');
-		container.style.position = 'absolute';
+		//container.style.position = 'absolute';
 		_options.cid = Wami.createID();
 		container.setAttribute('id', _options.cid);
 
@@ -237,10 +237,10 @@ Wami.setup = function(options) {
 
 			var augmentedfn = Wami.nameCallback(function() {
 				checkRemembered(finishedfn);
-				container.style.cssText = "position: absolute;";
+				//container.style.cssText = "position: absolute;";
 			});
 
-			container.style.cssText = "position: absolute; z-index: 99999";
+			//container.style.cssText = "position: absolute; z-index: 99999";
 
 			recorder.showSecurity(panel, startfn, augmentedfn, failfn);
 		}

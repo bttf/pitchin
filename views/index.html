@@ -1,26 +1,58 @@
 <!-- index.html -->
+<!doctype html>
 <html>
   <head>
+    <link href='http://fonts.googleapis.com/css?family=Advent+Pro:100' rel='stylesheet' type='text/css'>
+    
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script></script>
+    <script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script></script>
     <script src="/js/recorder.js"></script>
+
   </head>
 
   <body>
-    <h1>{{note}}</h1>
-    <div id="recorder">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 header">
+          <img src="/img/header.png" class="center-block img-responsive">
+        </div>
+      </div>
+      <div class="row top-buffer">
+        <div class="col-xs-12 text-center">
+          <span id="pitch">Please allow microphone access ...</span>
+        </div>
+      </div>
     </div>
-    <div id="flash"></div>
+
+    <div class="container text-center">
+      <div id="flash"></div>
+    </div>
 
     <script>
       Wami.setup({
         id: 'flash'
       });
+
+      waitForMic();
       
-      function pollAudio() {
-        stopRecording();
-        startRecording();
-        setTimeout(pollAudio, 2000);
+      function waitForMic() {
+        console.log('Is mic granted? ...');
+        if ((typeof Wami.getSettings) !== 'function') {
+          setTimeout(waitForMic, 1000);
+          return;
+        }
+
+        if (!Wami.getSettings().microphone.granted) {
+          console.log('Mic is not granted ...');
+          setTimeout(waitForMic, 1000);
+        }
+        else {
+          console.log('Mic is granted! Fuck yes!');
+          startRecording();
+        }
       }
 
       function startRecording() {
@@ -30,6 +62,14 @@
 
       function stopRecording() {
         Wami.stopRecording();
+
+        $.ajax({
+          url: 'http://localhost:3000/getPitch'
+        })
+        .done(function(data) {
+          $('#pitch').html(data);
+        });
+
         setTimeout(startRecording, 500);
       }
     </script>
