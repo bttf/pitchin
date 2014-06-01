@@ -6,6 +6,7 @@ var path = require('path');
 var wav = require('wav');
 var collect = require('collect-stream');
 var detectPitch = require('detect-pitch');
+var pk = require('./lib/pitch-kit');
 
 var filename = 'temp.wav';
 var signal = [];
@@ -43,6 +44,7 @@ app.post('/audio', function(req, res, next) {
       console.log('signal length is ' + signal.length);
       console.log('period is ' + period);
       console.log(22050 / period);
+      console.log('note is ' + pk.getPitch(22050 / period));
       console.log('should be exiting collect now ...');
     });
     console.log('collect exited ...');

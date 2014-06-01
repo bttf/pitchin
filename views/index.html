@@ -7,9 +7,8 @@
   </head>
 
   <body>
+    <h1>{{note}}</h1>
     <div id="recorder">
-      <button id="record">Record</button>
-      <button id="play">Play</button>
     </div>
     <div id="flash"></div>
 
@@ -26,10 +25,12 @@
 
       function startRecording() {
         Wami.startRecording('http://localhost:3000/audio');
+        setTimeout(stopRecording, 2000);
       }
 
       function stopRecording() {
         Wami.stopRecording();
+        setTimeout(startRecording, 500);
       }
     </script>
   </body>
