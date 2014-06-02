@@ -1,13 +1,20 @@
 body {
   background-color: #000;
+  padding-top: 80px;
 }
 
-#pitch {
+.pitch {
   font-family: 'Advent Pro', sans-serif;
-  font-size: 4em;
+  font-size: 8em;
   color: #fff;
+  text-shadow: #19fffc 3px 3px 5px;
+}
+
+.disclaimer {
+  font-size: 24px;
 }
 
 .top-buffer {
   margin-top: 4em;
 }
+

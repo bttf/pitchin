@@ -29,6 +29,19 @@ app.get('/getPitch', function(req, res) {
   res.send(200, pitch);
 });
 
+app.get('/getNotes', function(req, res) {
+  var str = '';
+  var notes = pk.getMajorScale(pitch);
+  console.log('appjs');
+  console.log(notes);
+  str += '<ul>';
+  for (var i = 0; i < notes.length; i++) {
+    str += '<li>' + i + ' ' + notes[i] + '</li>';
+  }
+  str += '</ul>';
+  res.send(200, str);
+});
+
 app.post('/audio', function(req, res, next) {
   if (req.get('Content-Type') !== 'audio/x-wav') {
     return;
