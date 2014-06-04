@@ -98,7 +98,7 @@
 
       function startRecording() {
         Wami.startRecording('http://localhost:3000/audio');
-        setTimeout(stopRecording, 2000);
+        setTimeout(stopRecording, 1000);
       }
 
       function stopRecording() {
@@ -108,18 +108,18 @@
           url: 'http://localhost:3000/getPitch'
         })
         .done(function(data) {
+          $('.pitch').css({ 'font-size': '8em' });
           $('.pitch').html(data);
           $.ajax({
             url: 'http://localhost:3000/getNotes'
           })
           .done(function(data) {
-            console.log('HEYYY!');
             $('.notes').html(data);
             console.log(data);
           });
         });
 
-        setTimeout(startRecording, 500);
+        setTimeout(startRecording, 250);
       }
     </script>
   </body>
