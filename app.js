@@ -8,7 +8,6 @@ var collect = require('collect-stream');
 var detectPitch = require('detect-pitch');
 var pk = require('./lib/pitch-kit');
 
-var filename = 'temp.wav';
 var signal = [];
 var pitch = '';
 
@@ -32,8 +31,6 @@ app.get('/getPitch', function(req, res) {
 app.get('/getNotes', function(req, res) {
   var str = '';
   var notes = pk.getMajorScale(pitch);
-  console.log('appjs');
-  console.log(notes);
   str += '<ul>';
   for (var i = 0; i < notes.length; i++) {
     str += '<li>' + i + ' ' + notes[i] + '</li>';
@@ -43,37 +40,17 @@ app.get('/getNotes', function(req, res) {
 });
 
 app.post('/audio', function(req, res, next) {
-  if (req.get('Content-Type') !== 'audio/x-wav') {
-    return;
-  }
+  if (req.get('Content-Type') !== 'audio/x-wav') return;
   var reader = new wav.Reader();
-  console.log('receiving audio request ...');
-
-  //console.log('opening stream for ' + path);
-  //var stream = fs.createWriteStream(filename);
- 
   reader.on('format', function(format) {
-    console.log('calling collect ..');
     collect(reader, function(err, data) {
-      var period;
-      console.log('piping request ...');
-      signal = data;
-      period = detectPitch(signal);
+      var period = detectPitch(data);
       pitch = pk.getPitch(22050 / period);
-      console.log('signal length is ' + signal.length);
-      console.log('period is ' + period);
-      console.log(22050 / period);
-      console.log('note is ' + pk.getPitch(22050 / period));
-      console.log('should be exiting collect now ...');
     });
-    console.log('collect exited ...');
   });
 
-  console.log('piping request ...');
   req.pipe(reader);
-  console.log('calling next() ...');
-  res.send(200, 'shit shit shit shit shit');
-  //next();
+  next();
 });
 
 app.listen(3000);
