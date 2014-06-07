@@ -29,14 +29,7 @@ app.get('/getPitch', function(req, res) {
 });
 
 app.get('/getNotes', function(req, res) {
-  var str = '';
-  var notes = pk.getMajorScale(pitch);
-  str += '<ul>';
-  for (var i = 0; i < notes.length; i++) {
-    str += '<li>' + i + ' ' + notes[i] + '</li>';
-  }
-  str += '</ul>';
-  res.send(200, str);
+  res.send(200, pk.getMajorScale(pitch));
 });
 
 app.post('/audio', function(req, res, next) {

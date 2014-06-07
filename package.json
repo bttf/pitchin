@@ -22,6 +22,7 @@
     "express": "^4.3.2",
     "handlebars": "^2.0.0-alpha.4",
     "path": "^0.4.9",
+    "romantique": "git://github.com/bttf/romantique.git",
     "wav": "^0.1.2"
   }
 }

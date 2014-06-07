@@ -114,8 +114,12 @@
             url: 'http://localhost:3000/getNotes'
           })
           .done(function(data) {
-            $('.notes').html(data);
-            console.log(data);
+            var outputStr = '<ul>';
+            for (var i = 0; i < 7 ; i++) {
+              outputStr += '<li>' + data[i].roman + ': ' + data[i].note + '</li>';
+            }
+            outputStr += '</ul>';
+            $('.notes').html(outputStr);
           });
         });
 
